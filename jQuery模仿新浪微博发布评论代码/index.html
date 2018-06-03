@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title> contentEditable=true</title>
+<link href="css\reset.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<style>
+	.main{
+		width: 800px;
+		margin:20px auto;
+	}
+	span{
+		display: inline-block;
+		width: 200px;
+		height: 25px;
+		line-height: 25px;
+		vertical-align: center;
+		text-align: left;
+		margin-bottom: 10px;
+	}
+	.tag{
+		font-size: 13px;
+		margin-left: 370px;
+		vertical-align: bottom;
+		text-align: center;
+		margin-bottom: 0;
+	}
+	.text{
+		width: 750px;
+		height: 180px;
+		margin:0 auto;
+		resize:none;
+	}
+
+	input{
+		display: inline-block;
+		width: 80px;
+		height: 50px;
+		background: #E2526F;
+		border: 0;
+		margin-left: 670px;
+		margin-top: 10px;
+	}
+	.creatediv{
+		width: 675px;
+		height: 80px;
+		border: 1px solid gray;
+		position: relative;
+		margin-top: 10px;
+		padding-left: 75px;
+	}
+	.createinput{
+		width: 80px;
+		height: 30px;
+		position:absolute;
+		right: 5px;
+		bottom:5px;
+	}
+	.createimg{
+		width: 50px;
+		height: 50px;
+		position: absolute;
+		top: 15px;
+		left: 15px;
+	}
+	.createdivs{
+		width:600px;
+		height:50px;
+		position: absolute;
+		top: 15px;
+		left: 85px;
+	}
+</style>
+</head>
+
+<body id="body">
+    <div class="main">
+    	<span>你想对楼主说点什么</span>
+    	<span class="tag">你最多可以输入30个字符</span>
+    	<textarea id="text" cols="30" rows="10" maxlength="30" class="text"></textarea><br>
+    	<input type="button" value="发 表" id="ipt">
+    	<div id="txt" >
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function(){
+            $("#ipt").on('click',function(){
+                //获取文本框红的内容
+                var txt = $("#text").val();
+                //判断留言是否为空
+                if(txt.length>0)
+            //或者if(txt==="")
+                 {
+                  //生产留言节点（<div><img><div>留言内容</div></div>）
+                  $msgNode="<div class='creatediv'><img class='createimg' src='pic/1.jpg'><div class='createdivs'>"+txt+"</div><input class='createinput' value='删除'></div>"
+                  //将留言节点追加到留言区
+                  $("#txt").append($msgNode);
+                  $("text").val('').focus();
+                  //删除留言
+                   $("#txt input[value='删除']").on("click",function(){
+                  $(this).parent().remove();
+               });
+                 }
+                 else
+                 {
+                  alert("评论不能为空，请输入内容");
+                  $("#text").focus(); //让文本框获得控制焦点
+                 }
+            });
+
+        });
+    </script>
+</body>
+</html>
